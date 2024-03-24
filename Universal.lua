@@ -36,7 +36,7 @@ local isfile = isfile or function(file)
 end
 
 if readfile == nil then
-	task.spawn(error, 'Render - Exploit not supported. Your exploit doesn\'t have filesystem support.')
+	task.spawn(error, 'Pulse Error - Exploit not supported. Your exploit doesn\'t have filesystem support.')
 	while task.wait() do end
 end 
 
@@ -44,7 +44,7 @@ pcall(function() core = game:GetService('CoreGui') end)
 
 local function vapeGithubRequest(scripturl)
 	if not isfile('vape/'..scripturl) then
-		local suc, res = pcall(function() return game:HttpGet('https://raw.githubusercontent.com/Erchobg/vapevoidware/'..readfile('vape/commithash.txt')..'/'..scripturl, true) end)
+		local suc, res = pcall(function() return game:HttpGet('https://raw.githubusercontent.com/anthfy/main/'..readfile('vape/commithash.txt')..'/'..scripturl, true) end)
 		assert(suc, res)
 		assert(res ~= '404: Not Found', res)
 		if scripturl:find('.lua') then res = '--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n'..res end
@@ -57,7 +57,7 @@ table.insert(vapeConnections, workspace:GetPropertyChangedSignal('CurrentCamera'
 	gameCamera = workspace.CurrentCamera or workspace:FindFirstChildWhichIsA('Camera')
 end))
 
-local RenderFunctions = loadstring(vapeGithubRequest("Libraries/voidwarefunctions.lua"))()
+local RenderFunctions = loadstring(vapeGithubRequest("Libraries/functions.lua"))()
 
 local isAlive = function() return false end 
 local playSound = function() end
@@ -4167,7 +4167,7 @@ task.spawn(function()
 		if hash ~= newcommit then 
 			RenderFunctions:DebugPrint('Successfully fetected a new update! '..(commit and hash or 'nil')..' to '..newcommit)
 			if tick() > notified then 
-				InfoNotification('Voidware', 'Voidware is currently processing updates in the background.', 15) 
+				InfoNotification('Pulse', 'Fetched most recent update involving security.', 15) 
 				notified = (tick() + 300)
 			end
 			hash = newcommit
@@ -4194,7 +4194,7 @@ runFunction(function()
 	end 
 	table.insert(vapeConnections, playersService.PlayerAdded:Connect(whitelistFunction))
 	if RenderFunctions:GetPlayerType(1) ~= 'STANDARD' then 
-		InfoNotification('Voidware Whitelist', 'You are now authenticated, welcome!', 4.5)
+		InfoNotification('Pulse Authentication', 'Authenticated successfully, Welcome.', 4.5)
 	end
 end)
 
@@ -7436,11 +7436,11 @@ local function warningNotification(title, text, delay)
 end
 local bothwhitelist = false
 if RenderFunctions:GetPlayerType(2) and RenderFunctions:GetPlayerType(3) then
-	warningNotification("Voidware | INF", "Welcome to Voidware INF | Detected user: "..lplr.DisplayName..".", 10)
+	warningNotification("Pulse Beta", "Welcome to Pulse Beta, "..lplr.DisplayName..".", 10)
 	bothwhitelist = true
 end
 if bothwhitelist == false then
 	if RenderFunctions:GetPlayerType(2) then
-		warningNotification("Voidware | Booster", "Welcome to Voidware Booster | Detected user: "..lplr.DisplayName..".", 10)
+		warningNotification("Pulse Beta Premium", "Welcome to Pulse Beta Premium, "..lplr.DisplayName..".", 10)
 	end
 end
